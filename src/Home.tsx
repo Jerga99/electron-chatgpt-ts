@@ -1,8 +1,14 @@
 import { useState } from "react";
 
+type Message = {
+  text: string;
+  id: string;
+  author: "human" | "ai";
+}
+
 export default function Home() {
   const [prompt, setPrompt] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const handleSubmit = () => {
     
