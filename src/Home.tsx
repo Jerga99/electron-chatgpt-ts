@@ -3,17 +3,25 @@ import { useState } from "react";
 export default function Home() {
   const [prompt, setPrompt] = useState("");
 
+  const handleSubmit = () => {
+    alert(`Sending to chatGPT: ${prompt}`);
+
+    setPrompt("");
+  }
+
   return (
     <div className="container">
       <div className="inputContainer">
-        {prompt}
         <textarea 
           onChange={(e) => setPrompt(e.target.value)}
           value={prompt}
           placeholder="Ask a question" 
           rows={3} 
         />
-        <button className="submit">Submit</button>
+        <button 
+          onClick={handleSubmit}
+          className="submit">Submit
+        </button>
       </div>
       <div className="answers">
         <div className="answer">
