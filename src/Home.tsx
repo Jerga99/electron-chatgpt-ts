@@ -1,9 +1,18 @@
+import { useState } from "react";
 
 export default function Home() {
+  const [prompt, setPrompt] = useState("");
+
   return (
     <div className="container">
       <div className="inputContainer">
-        <textarea placeholder="Ask a question" rows={3} />
+        {prompt}
+        <textarea 
+          onChange={(e) => setPrompt(e.target.value)}
+          value={prompt}
+          placeholder="Ask a question" 
+          rows={3} 
+        />
         <button className="submit">Submit</button>
       </div>
       <div className="answers">
