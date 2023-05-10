@@ -10,7 +10,7 @@ export default function Home() {
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     
     setMessages((messages) => {
       return [
@@ -22,6 +22,20 @@ export default function Home() {
         }
       ]
     });
+
+    await new Promise((res) => setTimeout(res, 1000));
+
+    setMessages(messages => 
+      [
+        ...messages,
+        {
+          text: "Here is my super smart answer, can be little bit longer, bla bla bla ...",
+          id: new Date().toISOString(),
+          author: "ai"
+        }
+      ]
+    );
+
 
     setPrompt("");
   }
@@ -43,7 +57,7 @@ export default function Home() {
       <div className="answers">
         { messages.map((message) =>
           <div key={message.id} className="answer">
-            <div className="author author-human">
+            <div className={`author author-${message.author}`}>
               {message.author}:
             </div>
             <div className="message">
