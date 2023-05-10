@@ -1,6 +1,7 @@
 
 import { createRoot } from "react-dom/client";
+import Home from "./Home";
 
 const root = createRoot(document.getElementById("app"));
-root.render(<h1>Hello React App!</h1>);
+root.render(<Home />);
 
