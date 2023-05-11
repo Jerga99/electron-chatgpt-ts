@@ -40,27 +40,25 @@ export default function Home() {
         ...messages,
         {
           text: prompt,
-          id: new Date().toISOString(),
+          id: new Date().toISOString() + Math.random(),
           author: "human"
         }
       ]
     });
 
-    await new Promise((res) => setTimeout(res, 1000));
+    setPrompt("");
+    electron.chatGPTApi.getCompletion(prompt);
 
     setMessages(messages => 
       [
         ...messages,
         {
           text: "Here is my super smart answer, can be little bit longer, bla bla bla ...",
-          id: new Date().toISOString(),
+          id: new Date().toISOString() + Math.random(),
           author: "ai"
         }
       ]
     );
-
-
-    setPrompt("");
   }
 
   return (
