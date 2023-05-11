@@ -9,7 +9,7 @@ type Message = {
 type MessageItemProps = { message: Message; }
 
 function MessageItem({message}: MessageItemProps) {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(message.author === "ai" ? "" : message.text);
 
   useEffect(() => {
     setTimeout(() => {
