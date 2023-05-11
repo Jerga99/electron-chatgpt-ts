@@ -4,8 +4,9 @@ import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("electron", {
   chatGPTApi: {
-    getCompletion(prompt: string) {
-      ipcRenderer.send("getCompletion", prompt);
+    async getCompletion(prompt: string) {
+      const result = await ipcRenderer.invoke("getCompletion", prompt);
+      return result as string;
     }
   }
 });

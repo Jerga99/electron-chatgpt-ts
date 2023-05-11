@@ -41,8 +41,9 @@ app.on('window-all-closed', () => {
   }
 });
 
-ipcMain.on("getCompletion", (e, prompt: string) => {
-  console.log(`FROM MAIN PROCESS: ${prompt}`);
+ipcMain.handle("getCompletion", (e, prompt: string) => {
+  const response = "Electron Forge is an all-in-one tool for packaging and distributing Electron applications. It combines many single-purpose packages to create a full build pipeline that works out of the box, complete with code signing, installers, and artifact publishing.";
+  return response;
 });
 
 app.on('activate', () => {

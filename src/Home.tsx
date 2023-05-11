@@ -14,7 +14,7 @@ function MessageItem({message}: MessageItemProps) {
   useEffect(() => {
     setTimeout(() => {
       setText(message.text.slice(0, text.length + 1));
-    }, 50);
+    }, 10);
   }, [text, message.text])
   
   return (
@@ -47,13 +47,13 @@ export default function Home() {
     });
 
     setPrompt("");
-    electron.chatGPTApi.getCompletion(prompt);
+    const result = await electron.chatGPTApi.getCompletion(prompt);
 
     setMessages(messages => 
       [
         ...messages,
         {
-          text: "Here is my super smart answer, can be little bit longer, bla bla bla ...",
+          text: result,
           id: new Date().toISOString() + Math.random(),
           author: "ai"
         }
