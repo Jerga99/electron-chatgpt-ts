@@ -34,6 +34,9 @@ export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
 
   const handleSubmit = async () => {
+    if (prompt.trim().length === 0) {
+      return;
+    }
     
     setMessages((messages) => {
       return [
