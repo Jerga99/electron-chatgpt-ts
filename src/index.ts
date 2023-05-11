@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, IpcMain, ipcMain } from 'electron';
 import { Configuration, OpenAIApi } from 'openai';
 import { OPENAI_SECRET_KEY } from './keys';
 
@@ -50,16 +50,24 @@ app.on('window-all-closed', () => {
   }
 });
 
-ipcMain.handle("getCompletion", async (e, prompt: string) => {
-  const completion = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt,
-    temperature: 0.7,
-    max_tokens: 1024
-  });
+type CompletionHandler = (e: Electron.IpcMainInvokeEvent, p: string) => Promise<AIResponse>;
 
-  return completion.data.choices[0].text;
-});
+const getCompletionHandler: CompletionHandler = async (e, prompt: string) => {
+  try {
+    const completion = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt,
+      temperature: 0.7,
+      max_tokens: 1024
+    });
+  
+    return {message: completion.data.choices[0].text};
+  } catch  {
+    return {message: "", error: "Oops something went wrong!"};
+  }
+}
+
+ipcMain.handle("getCompletion", getCompletionHandler);
 
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
