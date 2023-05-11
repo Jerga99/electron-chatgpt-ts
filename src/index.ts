@@ -50,9 +50,15 @@ app.on('window-all-closed', () => {
   }
 });
 
-ipcMain.handle("getCompletion", (e, prompt: string) => {
-  const response = "Electron Forge is an all-in-one tool for packaging and distributing Electron applications. It combines many single-purpose packages to create a full build pipeline that works out of the box, complete with code signing, installers, and artifact publishing.";
-  return response;
+ipcMain.handle("getCompletion", async (e, prompt: string) => {
+  const completion = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt,
+    temperature: 0.7,
+    max_tokens: 1024
+  });
+
+  return completion.data.choices[0].text;
 });
 
 app.on('activate', () => {
