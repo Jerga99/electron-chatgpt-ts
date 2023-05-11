@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Message = {
   text: string;
@@ -9,6 +9,13 @@ type Message = {
 type MessageItemProps = { message: Message; }
 
 function MessageItem({message}: MessageItemProps) {
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setText(message.text.slice(0, text.length + 1));
+    }, 50);
+  }, [text, message.text])
   
   return (
     <div className="answer">
@@ -16,7 +23,7 @@ function MessageItem({message}: MessageItemProps) {
         {message.author}:
       </div>
       <div className="message">
-        {message.text}
+        {text}
       </div>
     </div>
   )
