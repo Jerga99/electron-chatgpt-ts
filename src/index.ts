@@ -54,15 +54,14 @@ type CompletionHandler = (e: Electron.IpcMainInvokeEvent, p: string) => Promise<
 
 const getCompletionHandler: CompletionHandler = async (e, prompt: string) => {
   try {
-    // const completion = await openai.createCompletion({
-    //   model: "text-davinci-003",
-    //   prompt,
-    //   temperature: 0.7,
-    //   max_tokens: 1024
-    // });
+    const completion = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: generatePrompt(prompt),
+      temperature: 0.7,
+      max_tokens: 1024
+    });
     
-    // return {message: completion.data.choices[0].text};
-    throw new Error();
+    return {message: completion.data.choices[0].text};
   } catch  {
     return {message: "", error: "Oops something went wrong! Couln't get an answer. Please, try later"};
   }
@@ -80,3 +79,13 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+
+function generatePrompt(prompt: string) {
+  const message = `Your name is Henry and you are very friendly and smart AI.
+  You main field of knowledge is programming and computer sciences.
+  Human: ${prompt}
+  Henry:`;
+
+  return message;
+}
