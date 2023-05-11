@@ -54,16 +54,17 @@ type CompletionHandler = (e: Electron.IpcMainInvokeEvent, p: string) => Promise<
 
 const getCompletionHandler: CompletionHandler = async (e, prompt: string) => {
   try {
-    const completion = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt,
-      temperature: 0.7,
-      max_tokens: 1024
-    });
-  
-    return {message: completion.data.choices[0].text};
+    // const completion = await openai.createCompletion({
+    //   model: "text-davinci-003",
+    //   prompt,
+    //   temperature: 0.7,
+    //   max_tokens: 1024
+    // });
+    
+    // return {message: completion.data.choices[0].text};
+    throw new Error();
   } catch  {
-    return {message: "", error: "Oops something went wrong!"};
+    return {message: "", error: "Oops something went wrong! Couln't get an answer. Please, try later"};
   }
 }
 

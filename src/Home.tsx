@@ -53,7 +53,16 @@ export default function Home() {
     const result = await electron.chatGPTApi.getCompletion(prompt);
 
     if (result.error) {
-      console.log(result.error);
+      setMessages(messages => 
+        [
+          ...messages,
+          {
+            text: result.error,
+            id: new Date().toISOString() + Math.random(),
+            author: "ai"
+          }
+        ]
+      );
     } else {
       setMessages(messages => 
         [
