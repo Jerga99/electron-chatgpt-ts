@@ -6,6 +6,22 @@ type Message = {
   author: "human" | "ai";
 }
 
+type MessageItemProps = { message: Message; }
+
+function MessageItem({message}: MessageItemProps) {
+  
+  return (
+    <div className="answer">
+      <div className={`author author-${message.author}`}>
+        {message.author}:
+      </div>
+      <div className="message">
+        {message.text}
+      </div>
+    </div>
+  )
+}
+
 export default function Home() {
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
@@ -56,14 +72,10 @@ export default function Home() {
       </div>
       <div className="answers">
         { messages.map((message) =>
-          <div key={message.id} className="answer">
-            <div className={`author author-${message.author}`}>
-              {message.author}:
-            </div>
-            <div className="message">
-              {message.text}
-            </div>
-          </div>
+          <MessageItem 
+            key={message.id} 
+            message={message} 
+          />
         )}
       </div>
     </div>
