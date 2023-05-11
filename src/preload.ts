@@ -1,11 +1,11 @@
 
 
-import { contextBridge } from "electron";
+import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("electron", {
   chatGPTApi: {
     getCompletion(prompt: string) {
-      console.log(`RECEVEID: ${prompt}`);
+      ipcRenderer.send("getCompletion", prompt);
     }
   }
 });
